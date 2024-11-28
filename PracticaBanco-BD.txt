@@ -1,0 +1,235 @@
+--Crear la BD:Banco
+--Fecha: 25 Marzo 2020
+--Fecha de ultima modificacion: 27 Marzo 2020
+--Autor: Jesus Adrian Lopez LuevanosN°Lista:11
+
+--Crear la BD BancoPractica
+Create database BancoPractica
+
+--Poner en uso 
+ Use BancoPractica
+
+--Crear la tabla Cliente 
+create table Cliente
+(Nombre_Cliente VarChar(20), Calle_Cliente VarChar(15), Ciudad_Cliente VarChar(15), Primary Key(Nombre_Cliente))
+
+--Datos de la tabla Cliente
+
+Insert into Cliente
+values('Abril', 'Preciados', 'Valsain')
+
+Insert into Cliente
+values('Amo', 'Embajadores', 'Arganzuela')
+
+Insert into Cliente
+values('Badorrey', 'Delicias', 'Valsain')
+
+Insert into Cliente
+values('Fernandez', 'Jazmin', 'Leon')
+
+Insert into Cliente
+values('Gomez', 'Carretas', 'Cercada')
+
+Insert into Cliente
+values('Gonzales', 'Arenal', 'La Granja')
+
+Insert into Cliente 
+values('Lopez', 'Mayor', 'Peguerinos')
+
+Insert into Cliente
+values('Perez', 'Carretas', 'Cercada')
+
+Insert into Cliente 
+values('Rodriguez', 'Yeserias', 'Cadiz')
+
+Insert into Cliente
+values('Ruperez', 'Ramblas', 'Leon')
+
+Insert into Cliente
+values('Santos', 'Mayor', 'Peguerinos')
+
+Insert into Cliente
+values('Valdivienso', 'Goya', 'Vigo')
+
+--Crear la tabla Sucursal
+Create table Sucursal
+(Nombre_Sucursal VarChar(30), Ciudad_Sucursal VarChar(20), Activos_Sucursal Int, Primary Key(Nombre_Sucursal))
+
+--Datos de la tabla Sucursal
+
+Insert into Sucursal
+values('Galapagar', 'Arganzuela', '7500')
+
+Insert into Sucursal
+values('Centro', 'Arganzuela', '9000000')
+
+Insert into Sucursal
+values('Bacerril', 'Aluche', '2000')
+
+Insert into Sucursal
+values('Segovia', 'Cercada', '3700000')
+
+Insert into Sucursal
+values('Navacerrada', 'Aluche', '1700000')
+
+Insert into Sucursal
+values('Navas de la Asuncion', 'Alcala de Henares', '1500')
+
+Insert into Sucursal
+values('Moratzarzal', 'La Granja', '2500')
+
+Insert into Sucursal
+values('Collado Mediano', 'Aluche', '8000000')
+
+--Creacion de la tabla Cuenta
+Create table Cuenta
+(No_Cuenta VarChar(5), Nombre_Sucursal VarChar(30), Saldo SmallMoney, Primary Key(No_Cuenta))
+
+--Datos de la tabla Cuenta
+
+Insert into Cuenta
+values('C-101', 'Centro', '500')
+
+Insert into Cuenta
+values('C-102', 'Navacerrada', '400')
+
+Insert into Cuenta
+values('C-201', 'Galapagar', '900')
+
+Insert into Cuenta
+values('C-215', 'Bacerril', '700')
+
+Insert into Cuenta
+values('C-217', 'Galapagar', '750')
+
+Insert into Cuenta
+values('C-222', 'Moratizarzal', '700')
+
+Insert into Cuenta 
+values('C-305', 'Collado Mediano', '350')
+
+--Crear la tabla Prestamo
+Create table Prestamo
+(No_Prestamo VarChar(4), Nombre_Sucursal VarChar(30), Importe Smallint, Primary Key(No_Prestamo))
+
+--Datos de la tabla Prestamo
+
+Insert into Prestamo 
+values('P-11', 'Collado Mediano', '900')
+
+Insert into Prestamo 
+values('P-14', 'Centro', '1500')
+
+Insert into Prestamo 
+values('P-15', 'Navacerrada', '1500')
+
+Insert into Prestamo
+values('P-16', 'Navacerrada', '1300')
+
+Insert into Prestamo
+values('P-17', 'Centro', '1000')
+
+Insert into Prestamo
+values('P-23', 'Moratzarzal', '2000')
+
+Insert into Prestamo
+values('P-93', 'Bacerril', '500')
+
+--Crear la tabla de relacion Cliente/Cuenta
+Create table Cli_Cta
+(Nombre_Cli VarChar(20), No_Cta VarChar(5), Primary Key(Nombre_Cli, No_Cta))
+
+--Datos de la tabla Cli_Cta
+
+Insert into Cli_Cta
+values('Abril', 'C-102')
+
+Insert into Cli_Cta
+values('Gomez', 'C-101')
+
+Insert into Cli_Cta
+values('Gonzalez', 'C-201')
+
+Insert into Cli_Cta
+values('Gonzalez', 'C-217')
+
+Insert into Cli_Cta
+values('Lopez', 'C-222')
+
+Insert into Cli_Cta
+values('Ruperez', 'C-2015')
+
+Insert into Cli_Cta
+values('Santos', 'C-305')
+
+Alter table Cli_Cta
+add constraint FK_NombreCliente
+foreign Key(Nombre_Cli)
+references Cliente(Nombre_Cliente)
+
+Alter table Cli_Cta
+add constraint FK_NumeroCuenta
+foreign Key(No_Cta)
+references Cuenta(No_Cuenta)
+
+
+--Crear la tabla de la relacion Cliente/Prestamo
+Create table Cli_Prest
+(Nombre_Cli VarChar(20),No_Prest VarChar(4), Primary Key(Nombre_Cli, No_Prest))
+
+--Datos de la tabla Cli_Prest
+
+Insert into Cli_Prest
+values('Fernandez', 'P-16')
+
+Insert into Cli_Prest
+values('Gomez', 'P-93')
+
+Insert into Cli_Prest
+values('Gomez', 'P-15')
+
+Insert into Cli_Prest
+values('Lopez', 'P-14')
+
+Insert into Cli_Prest
+values('Perez', 'P-17')
+
+Insert into Cli_Prest
+values('Santos', 'P-11')
+
+Insert into Cli_Prest
+values('Santos', 'P-23')
+
+Insert into Cli_Prest
+values('Valdivieso', 'P-17')
+
+Alter table Cli_Prest
+add constraint FK_NombreCliente
+foreign Key(Nombre_Cli)
+references Cliente(Nombre_Cliente)
+
+Alter table Cli_Prest
+add constraint FK_NoPrestamo
+foreign Key(No_Prest)
+references Prestamo(No_Prestamo)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
